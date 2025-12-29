@@ -1,0 +1,43 @@
+import streamlit as st
+import matplotlib.pyplot as plt
+import sys
+
+def hitung_digit_iteratif(n):
+    if n == 0:
+        return 1
+    count = 0
+    n = abs(n)
+    while n > 0:
+        count += 1
+        n //= 10
+    return count
+
+def hitung_digit_rekursif(n):
+    n = abs(n)
+    if n < 10:
+        return 1
+    return 1 + hitung_digit_rekursif(n // 10)
+
+st.title("Perbandingan Iteratif vs Rekursif")
+
+angka = st.number_input("Masukkan bilangan", value=12345)
+
+hasil_iteratif = hitung_digit_iteratif(angka)
+hasil_rekursif = hitung_digit_rekursif(angka)
+
+st.write("### Hasil Perhitungan")
+st.write("Iteratif :", hasil_iteratif)
+st.write("Rekursif :", hasil_rekursif)
+
+digit = list(range(1, 11))
+iteratif = digit
+rekursif = digit
+
+fig, ax = plt.subplots()
+ax.plot(digit, iteratif, label="Iteratif O(d)")
+ax.plot(digit, rekursif, label="Rekursif O(d)")
+ax.set_xlabel("Jumlah Digit")
+ax.set_ylabel("Jumlah Operasi")
+ax.legend()
+
+st.pyplot(fig)
